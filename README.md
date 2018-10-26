@@ -210,7 +210,7 @@ try {
 ### refundPayment
 
 Refund a payment. An array will be returned.
-he parameter `payment_type` can be: `credit_card`, `bit_cash`, `nanaco` or `net_cash`
+The parameter `payment_type` can be: `credit_card`, `bit_cash`, `nanaco` or `net_cash`
 
 ```php
 $this->Komoju = new Komoju(Configure::read('Komoju'));
