@@ -297,10 +297,6 @@ protected $tokenResource = 'tokens';
     if (!isset($payment['email']) || !filter_var($payment['email'], FILTER_VALIDATE_EMAIL)) {
       throw new KomojuException(__d('Komoju' , 'Not a valid e-mail address'));
     }
-    // Phone Number
-    if (!isset($payment['phone'])) {
-      throw new KomojuException(__d('Komoju' , 'Not a valid phone number'));
-    }
     // Amount
     if (!isset($payment['amount'])) {
       throw new KomojuException(__d('Komoju' , 'Must specify an "amount" to charge'));
@@ -309,6 +305,8 @@ protected $tokenResource = 'tokens';
     if(!in_array($payment['store'], $this->konbiniNames)) {
       throw new KomojuException(__d('Komoju' , 'Not a valid kombini name'));
     }
+    // Phone Number
+    $phone = (isset($payment['phone'])) ? $payment['phone'] : null;
     // Currency
     $currency = (isset($payment['currency'])) ? $payment['currency'] : 'JPY';
     // Build Konbini data
@@ -397,12 +395,15 @@ protected $tokenResource = 'tokens';
     if (!isset($payment['amount'])) {
       throw new KomojuException(__d('Komoju' , 'Must specify an "amount" to charge'));
     }
+    // E-mail address
+    $email = (isset($payment['email'])) ? $payment['email'] : null;
     // Currency
     $currency = (isset($payment['currency'])) ? $payment['currency'] : 'JPY';
     // Build BitCash array
     $data = array(
       'amount' => $payment['amount'],  // The total cost of the transaction
       'currency' => $currency,    // A 3-character currency code
+      'email' => $email,
       'payment_details[prepaid_number]' => $payment['card'],
       'payment_details[type]' => $payment['payment_type']
     );
@@ -417,12 +418,26 @@ protected $tokenResource = 'tokens';
  * @author Samy Younsi (Shino Corp') 
  **/
   public function formatWebMoneyAndNanacoAndNetCashPayment($payment) {
+    // prepaid number
+    if (!isset($payment['card'])) {
+      throw new KomojuException(__d('Komoju' , 'Not a valid prepaid number'));
+    }
+    $payment['card'] = preg_replace("/\s/" , "" , $payment['card']);
+    // Amount
+    if (!isset($payment['amount'])) {
+      throw new KomojuException(__d('Komoju' , 'Must specify an "amount" to charge'));
+    }
+    // E-mail address
+    $email = (isset($payment['email'])) ? $payment['email'] : null;
+    // Currency
+    $currency = (isset($payment['currency'])) ? $payment['currency'] : 'JPY';
     // Build Nanaco array
     $data = array(
       'amount' => $payment['amount'],  // The total cost of the transaction
       'currency' => $currency,    // A 3-character currency code
       'external_order_num' => $this->merchantUUID,
       'metadata[foobar]' => $this->metadata,
+      'email' => $email,
       'payment_details[prepaid_number]' => $payment['card'],
       'payment_details[type]' => $payment['payment_type']
     );
