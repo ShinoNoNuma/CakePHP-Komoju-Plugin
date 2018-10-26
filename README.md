@@ -217,7 +217,7 @@ $this->Komoju = new Komoju(Configure::read('Komoju'));
 
 $refund = array(
   'payment_id' => '2vf94gpydhik6red1fwg66n19',
-  'amount' => 1000, // Used only if payment_type is credit card 
+  'amount' => 1000, // Only used if payment_type is credit card 
   'payment_type' => 'credit_card'
 );
 
