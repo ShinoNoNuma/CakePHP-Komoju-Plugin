@@ -160,3 +160,70 @@ try {
   $e->getMessage();
 } 
 ```
+
+### listPayments
+
+List all transactions completed. An array will be returned.
+
+```php
+$this->Komoju = new Komoju(Configure::read('Komoju'));
+            
+try {
+  $this->Komoju->listPayments();
+} catch (Exception $e) {
+  $e->getMessage();
+} 
+```
+
+### showPayment
+
+Show the details of one completed transaction. An array will be returned.
+
+```php
+$this->Komoju = new Komoju(Configure::read('Komoju'));
+
+$paymentID = '2vf94gpydhik6red1fwg66n19';
+
+try {
+  $this->Komoju->showPayment($paymentID);
+} catch (Exception $e) {
+  $e->getMessage();
+} 
+```
+
+### cancelPayment
+
+Cancel a payment. An array will be returned.
+
+```php
+$this->Komoju = new Komoju(Configure::read('Komoju'));
+
+$paymentID = '2vf94gpydhik6red1fwg66n19';
+
+try {
+  $this->Komoju->cancelPayment($paymentID);
+} catch (Exception $e) {
+  $e->getMessage();
+} 
+```
+
+### refundPayment
+
+Refund a payment. An array will be returned.
+he parameter `payment_type` can be: `credit_card`, `bit_cash`, `nanaco` or `net_cash`
+
+```php
+$this->Komoju = new Komoju(Configure::read('Komoju'));
+
+$refund = array(
+  'payment_id' => '2vf94gpydhik6red1fwg66n19',
+  'amount' => 1000, // Used only if payment_type is credit card 
+  'payment_type' => 'credit_card'
+);
+
+try {
+  $this->Komoju->refundPayment($refund);
+} catch (Exception $e) {
+  $e->getMessage();
+} 
+```

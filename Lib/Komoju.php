@@ -166,6 +166,156 @@ protected $tokenResource = 'tokens';
   }
 
 /**
+ * List Payments
+ *
+ * @return array
+ * @author Samy Younsi (Shino Corp')
+ **/
+  public function listPayments() {
+    try {
+      // HttpSocket
+      if (!$this->HttpSocket) {
+        $this->HttpSocket = new HttpSocket();
+      }
+      // API endpoint
+      $endPoint = $this->restEndpoint.$this->komojuApiVersion.DS.$this->paymentResource;
+      // Make a Http request for a new token
+      $this->HttpSocket->configAuth('Basic', $this->secretKey, '');
+      $response = $this->HttpSocket->get($endPoint);
+      // Parse the results
+      $parsed = $this->parseClassicApiResponse($response);
+      // Handle the response
+      if (isset($parsed['resource']))  {
+        return $parsed;
+      }
+      elseif (isset($parsed['error']))  {
+        throw new KomojuException($this->getErrorMessage($parsed));
+      }
+      else {
+        throw new KomojuException(__d('Komoju', 'There was an error.'));
+      }
+    } catch (SocketException $e) {
+      throw new KomojuException(__d('Komoju', 'There was a problem, please try again.'));
+    }
+  }
+
+/**
+ * Show Payment
+ * @param string $paymentID resource params
+ * @return array
+ * @author Samy Younsi (Shino Corp')
+ **/
+public function showPayment($paymentID) {
+    try {
+      // HttpSocket
+      if (!$this->HttpSocket) {
+        $this->HttpSocket = new HttpSocket();
+      }
+      // API endpoint
+      $endPoint = $this->restEndpoint.$this->komojuApiVersion.DS.$this->paymentResource.DS.$paymentID;
+      // Make a Http request for a new token
+      $this->HttpSocket->configAuth('Basic', $this->secretKey, '');
+      $response = $this->HttpSocket->get($endPoint);
+      // Parse the results
+      $parsed = $this->parseClassicApiResponse($response);
+      // Handle the response
+      if (isset($parsed['id']))  {
+        return $parsed;
+      }
+      elseif (isset($parsed['error']))  {
+        throw new KomojuException($this->getErrorMessage($parsed));
+      }
+      else {
+        throw new KomojuException(__d('Komoju', 'There was an error.'));
+      }
+    } catch (SocketException $e) {
+      throw new KomojuException(__d('Komoju', 'There was a problem, please try again.'));
+    }
+  }
+
+/**
+ * Cancel a payment
+ * @param string $paymentID resource params
+ * @return array
+ * @author Samy Younsi (Shino Corp')
+ **/
+public function cancelPayment($paymentID) {
+    try {
+      // HttpSocket
+      if (!$this->HttpSocket) {
+        $this->HttpSocket = new HttpSocket();
+      }
+      // API endpoint
+      $endPoint = $this->restEndpoint.$this->komojuApiVersion.DS.$this->paymentResource.DS.$paymentID.DS.'cancel';
+      // Make a Http request for a new token
+      $this->HttpSocket->configAuth('Basic', $this->secretKey, '');
+      $response = $this->HttpSocket->post($endPoint);
+      // Parse the results.
+      $parsed = $this->parseClassicApiResponse($response);
+      // Handle the response
+      if (isset($parsed['id']))  {
+        return $parsed;
+      }
+      elseif (isset($parsed['error']))  {
+        throw new KomojuException($this->getErrorMessage($parsed));
+      }
+      else {
+        throw new KomojuException(__d('Komoju', 'There was an error.'));
+      }
+    } catch (SocketException $e) {
+      throw new KomojuException(__d('Komoju', 'There was a problem, please try again.'));
+    }
+  }
+
+/**
+ * Refund a payment
+ * @param string $refund resource params
+ * @return array
+ * @author Samy Younsi (Shino Corp')
+ **/
+public function refundPayment($refund) {
+    try {
+      if (empty($refund['payment_id'])) {
+        throw new KomojuException(__d('Komoju' , 'Payment ID must be specify'));
+      }
+      $paymentID = $refund['payment_id'];
+      // Amount
+      if (empty($refund['amount'])) {
+        throw new KomojuException(__d('Komoju' , 'Must specify an "amount" to refund'));
+      }
+      // check payment type
+      if($refund['payment_type'] == 'credit_card'){
+        $data = array('amount' => $refund['amount']);
+      }else{
+        $data = null;
+      }
+      // HttpSocket
+      if (!$this->HttpSocket) {
+        $this->HttpSocket = new HttpSocket();
+      }
+      // API endpoint
+      $endPoint = $this->restEndpoint.$this->komojuApiVersion.DS.$this->paymentResource.DS.$paymentID.DS.'cancel';
+      // Make a Http request for a new token
+      $this->HttpSocket->configAuth('Basic', $this->secretKey, '');
+      $response = $this->HttpSocket->post($endPoint, $data);
+      // Parse the results.
+      $parsed = $this->parseClassicApiResponse($response);
+      // Handle the response
+      if (isset($parsed['id']))  {
+        return $parsed;
+      }
+      elseif (isset($parsed['error']))  {
+        throw new KomojuException($this->getErrorMessage($parsed));
+      }
+      else {
+        throw new KomojuException(__d('Komoju', 'There was an error.'));
+      }
+    } catch (SocketException $e) {
+      throw new KomojuException(__d('Komoju', 'There was a problem, please try again.'));
+    }
+  }
+
+/**
  * Create Payment
  * The createPayment API Operation enables you to process a payment.
  *
@@ -175,7 +325,7 @@ protected $tokenResource = 'tokens';
  **/
   public function createPayment($payment) {
     try {
-      // Build NVPs
+      // Build array payment
       $data = $this->formatCreatePayment($payment);
       // HttpSocket
       if (!$this->HttpSocket) {
@@ -188,7 +338,7 @@ protected $tokenResource = 'tokens';
       $response = $this->HttpSocket->post($endPoint , $data);
       // Parse the results
       $parsed = $this->parseClassicApiResponse($response);
-      // Handle the resposne
+      // Handle the response
       if (isset($parsed['id']))  {
         return $parsed;
       }
@@ -241,7 +391,7 @@ protected $tokenResource = 'tokens';
  **/
   public function formatCreditCardPayment($payment) {
        // Credit card number
-    if (!isset($payment['card'])) {
+    if (!$this->validateCC($payment['card'])) {
       throw new KomojuException(__d('Komoju' , 'Not a valid credit card number'));
     }
     $payment['card'] = preg_replace("/\s/" , "" , $payment['card']);
@@ -460,6 +610,16 @@ protected $tokenResource = 'tokens';
       }
     }
     return $parsed['error']['message'];
+  }
+
+/**
+ * Validates a credit card number
+ *
+ * @return void
+ * @author Samy Younsi
+ **/
+  public function validateCC($cc) {
+    return Validation::cc($cc);
   }
 
 /**
