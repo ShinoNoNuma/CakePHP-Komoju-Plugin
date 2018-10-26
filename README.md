@@ -29,7 +29,7 @@ git submodule update
 
 _[GIT Clone]_
 
-In your `Plugin` directory type:
+In your `plugins` directory type:
 
 ```shell
 git clone -b master git://github.com/ShinoNoNuma/CakePHP-Komoju-Plugin.git Komoju
@@ -53,8 +53,7 @@ Configure::write('Komoju', [
     'secretKey' => 'YourTestSecretKey'
 ]);
 ```
-
-And don't forget to load the class Komoju in the desired controller
+And don't forget to load the class Komoju into the desired controller
 
 ```php
 App::uses('Komoju', 'Komoju.Lib');
