@@ -230,3 +230,102 @@ try {
   $e->getMessage();
 } 
 ```
+
+### capturePayment
+
+Capture a payment. An array will be returned.
+
+```php
+$this->Komoju = new Komoju(Configure::read('Komoju'));
+
+$paymentID = '2vf94gpydhik6red1fwg66n19';
+
+try {
+  $this->Komoju->capturePayment($paymentID);
+} catch (Exception $e) {
+  $e->getMessage();
+} 
+```
+### listCustomers
+
+List all customers created. An array will be returned.
+
+```php
+$this->Komoju = new Komoju(Configure::read('Komoju'));
+            
+try {
+  $this->Komoju->listCustomers();
+} catch (Exception $e) {
+  $e->getMessage();
+} 
+```
+
+### showCustomer
+
+Show the customer's details. An array will be returned.
+
+```php
+$this->Komoju = new Komoju(Configure::read('Komoju'));
+
+$customerID = '02bhi70j6ypcg4kceos79pnmo';
+
+try {
+  $this->Komoju->showCustomer($customerID);
+} catch (Exception $e) {
+  $e->getMessage();
+} 
+```
+
+### createCustomer
+Create a new Komoju's customer.
+
+```php
+$this->Komoju = new Komoju(Configure::read('Komoju'));
+
+$customer = array(
+   'email' => 'sacha@pokemon.com', // Optional
+   'order_id' => 'abcdefg', // Optional
+   'payment_details' => 'tok_77d9d753f8b821c2' // Optional
+);
+            
+try {
+  $this->Komoju->createCustomer($customer);
+} catch (Exception $e) {
+  $e->getMessage();
+} 
+```
+
+### updateCustomer
+Update a Komoju's customer.
+
+```php
+$this->Komoju = new Komoju(Configure::read('Komoju'));
+
+$customer = array(
+   'customer_id' => '02bhi70j6ypcg4kceos79pnmo',
+   'email' => 'sacha@pokemon.com', // Optional
+   'order_id' => 'abcdefg', // Optional
+   'payment_details' => 'tok_77d9d753f8b821c2' // Optional
+);
+            
+try {
+  $this->Komoju->updateCustomer($customer);
+} catch (Exception $e) {
+  $e->getMessage();
+} 
+```
+### deleteCustomer
+
+Destroy a customer. An array will be returned.
+
+```php
+$this->Komoju = new Komoju(Configure::read('Komoju'));
+
+$customerID = '02bhi70j6ypcg4kceos79pnmo';
+
+try {
+  $this->Komoju->deleteCustomer($customerID);
+} catch (Exception $e) {
+  $e->getMessage();
+} 
+```

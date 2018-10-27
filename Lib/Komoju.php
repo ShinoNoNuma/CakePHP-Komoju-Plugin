@@ -185,10 +185,10 @@ protected $tokenResource = 'tokens';
       // Parse the results
       $parsed = $this->parseClassicApiResponse($response);
       // Handle the response
-      if (isset($parsed['resource']))  {
+      if (isset($parsed['resource'])) {
         return $parsed;
       }
-      elseif (isset($parsed['error']))  {
+      elseif (isset($parsed['error'])) {
         throw new KomojuException($this->getErrorMessage($parsed));
       }
       else {
@@ -219,10 +219,10 @@ public function showPayment($paymentID) {
       // Parse the results
       $parsed = $this->parseClassicApiResponse($response);
       // Handle the response
-      if (isset($parsed['id']))  {
+      if (isset($parsed['id'])) {
         return $parsed;
       }
-      elseif (isset($parsed['error']))  {
+      elseif (isset($parsed['error'])) {
         throw new KomojuException($this->getErrorMessage($parsed));
       }
       else {
@@ -269,7 +269,7 @@ public function cancelPayment($paymentID) {
 
 /**
  * Refund a payment
- * @param string $refund resource params
+ * @param array $refund resource params
  * @return array
  * @author Samy Younsi (Shino Corp')
  **/
@@ -301,6 +301,40 @@ public function refundPayment($refund) {
       // Parse the results.
       $parsed = $this->parseClassicApiResponse($response);
       // Handle the response
+      if (isset($parsed['id'])) {
+        return $parsed;
+      }
+      elseif (isset($parsed['error'])) {
+        throw new KomojuException($this->getErrorMessage($parsed));
+      }
+      else {
+        throw new KomojuException(__d('Komoju', 'There was an error.'));
+      }
+    } catch (SocketException $e) {
+      throw new KomojuException(__d('Komoju', 'There was a problem, please try again.'));
+    }
+  }
+
+/**
+ * Capture a payment
+ * @param string $paymentID resource param
+ * @return array
+ * @author Samy Younsi (Shino Corp')
+ **/
+public function capturePayment($paymentID) {
+    try {
+      // HttpSocket
+      if (!$this->HttpSocket) {
+        $this->HttpSocket = new HttpSocket();
+      }
+      // API endpoint
+      $endPoint = $this->restEndpoint.$this->komojuApiVersion.DS.$this->paymentResource.DS.$paymentID.DS.'capture';
+      // Make a Http request for a new token
+      $this->HttpSocket->configAuth('Basic', $this->secretKey, '');
+      $response = $this->HttpSocket->post($endPoint, $data);
+      // Parse the results.
+      $parsed = $this->parseClassicApiResponse($response);
+      // Handle the response
       if (isset($parsed['id']))  {
         return $parsed;
       }
@@ -314,7 +348,6 @@ public function refundPayment($refund) {
       throw new KomojuException(__d('Komoju', 'There was a problem, please try again.'));
     }
   }
-
 /**
  * Create Payment
  * The createPayment API Operation enables you to process a payment.
@@ -603,6 +636,204 @@ public function refundPayment($refund) {
       'payment_details[type]' => $payment['payment_type']
     );
     return $data;
+  }
+
+/**
+ * List Customers
+ *
+ * @return array
+ * @author Samy Younsi (Shino Corp')
+ **/
+  public function listCustomers() {
+    try {
+      // HttpSocket
+      if (!$this->HttpSocket) {
+        $this->HttpSocket = new HttpSocket();
+      }
+      // API endpoint
+      $endPoint = $this->restEndpoint.$this->komojuApiVersion.DS.$this->customerResource;
+      // Make a Http request for a new token
+      $this->HttpSocket->configAuth('Basic', $this->secretKey, '');
+      $response = $this->HttpSocket->get($endPoint);
+      // Parse the results
+      $parsed = $this->parseClassicApiResponse($response);
+      // Handle the response
+      if (isset($parsed['resource'])) {
+        return $parsed;
+      }
+      elseif (isset($parsed['error'])) {
+        throw new KomojuException($this->getErrorMessage($parsed));
+      }
+      else {
+        throw new KomojuException(__d('Komoju', 'There was an error.'));
+      }
+    } catch (SocketException $e) {
+      throw new KomojuException(__d('Komoju', 'There was a problem, please try again.'));
+    }
+  }
+
+/**
+ * Show Customer
+ * @param string $customerID resource params
+ * @return array
+ * @author Samy Younsi (Shino Corp')
+ **/
+public function showCustomer($customerID) {
+    try {
+      // HttpSocket
+      if (!$this->HttpSocket) {
+        $this->HttpSocket = new HttpSocket();
+      }
+      // API endpoint
+      $endPoint = $this->restEndpoint.$this->komojuApiVersion.DS.$this->customerResource.DS.$customerID;
+      // Make a Http request for a new token
+      $this->HttpSocket->configAuth('Basic', $this->secretKey, '');
+      $response = $this->HttpSocket->get($endPoint);
+      // Parse the results
+      $parsed = $this->parseClassicApiResponse($response);
+      // Handle the response
+      if (isset($parsed['id'])) {
+        return $parsed;
+      }
+      elseif (isset($parsed['error'])) {
+        throw new KomojuException($this->getErrorMessage($parsed));
+      }
+      else {
+        throw new KomojuException(__d('Komoju', 'There was an error.'));
+      }
+    } catch (SocketException $e) {
+      throw new KomojuException(__d('Komoju', 'There was a problem, please try again.'));
+    }
+  }
+/**
+ * Create a customer
+ *
+ * @param https://docs.komoju.com/en/api/resources/customers/create/
+ * @return array Formatted array for add Komoju's customer 
+ * @author Samy Younsi (Shino Corp') 
+ **/
+  public function createCustomer($customer) {
+    // Email address
+    $email = (isset($customer['email'])) ? $customer['email'] : null;
+    // metadata order id
+    $order_id = (isset($customer['order_id'])) ? $customer['order_id'] : null;
+    // payment details
+    $payment_details = (isset($customer['payment_details'])) ? $customer['payment_details'] : null;
+    // Build Customer data
+    $data = array(
+      'email' => $email, // Optional
+      'metadata[order_id]' => $order_id, // Optional
+      'payment_details' => $payment_details // Optional
+    );
+    try { 
+      // HttpSocket
+      if (!$this->HttpSocket) {
+        $this->HttpSocket = new HttpSocket();
+      }
+      // API endpoint
+      $endPoint = $this->restEndpoint.$this->komojuApiVersion.DS.$this->customerResource;
+      // Make a Http request for a new token
+      $this->HttpSocket->configAuth('Basic', $this->secretKey, '');
+      $response = $this->HttpSocket->post($endPoint , $data);
+      // Parse the results
+      $parsed = $this->parseClassicApiResponse($response);
+      // Handle the response
+      if (isset($parsed['id'])) {
+        return $parsed;
+      }
+      elseif (isset($parsed['error'])) {
+        throw new KomojuException($this->getErrorMessage($parsed));
+      }
+      else {
+        throw new KomojuException(__d('Komoju', 'An error occurred during the process of creating a customer'));
+      }
+    } catch (SocketException $e) {
+      throw new KomojuException(__d('Komoju', 'There was a problem processing of process of creating, please try again.'));
+    }
+  }
+/**
+ * Update a customer
+ *
+ * @param https://docs.komoju.com/en/api/resources/customers/update/
+ * @return array Formatted array for update a Komoju's customer 
+ * @author Samy Younsi (Shino Corp') 
+ **/
+  public function updateCustomer($customer) {
+    // customer_id
+    if (!isset($customer['customer_id'])) {
+      throw new KomojuException(__d('Komoju' , 'customer ID must be specify'));
+    }
+    $customerID = $customer['customer_id'];
+    // Email address
+    $email = (isset($customer['email'])) ? $customer['email'] : null;
+    // metadata order id
+    $order_id = (isset($customer['order_id'])) ? $customer['order_id'] : null;
+    // payment details
+    $payment_details = (isset($customer['payment_details'])) ? $customer['payment_details'] : null;
+    // Build Customer data
+    $data = array(
+      'email' => $email, // Optional
+      'metadata[order_id]' => $order_id, // Optional
+      'payment_details' => $payment_details // Optional
+    );
+    try { 
+      // HttpSocket
+      if (!$this->HttpSocket) {
+        $this->HttpSocket = new HttpSocket();
+      }
+      // API endpoint
+      $endPoint = $this->restEndpoint.$this->komojuApiVersion.DS.$this->customerResource.DS.$customerID;
+      // Make a Http request for a new token
+      $this->HttpSocket->configAuth('Basic', $this->secretKey, '');
+      $response = $this->HttpSocket->patch($endPoint , $data);
+      // Parse the results
+      $parsed = $this->parseClassicApiResponse($response);
+      // Handle the response
+      if (isset($parsed['id'])) {
+        return $parsed;
+      }
+      elseif (isset($parsed['error'])) {
+        throw new KomojuException($this->getErrorMessage($parsed));
+      }
+      else {
+        throw new KomojuException(__d('Komoju', 'An error occurred during the process of updating a customer'));
+      }
+    } catch (SocketException $e) {
+      throw new KomojuException(__d('Komoju', 'There was a problem processing of process of updating, please try again.'));
+    }
+  }
+/**
+ * Delete Customer
+ * @param string $customerID params
+ * @return array
+ * @author Samy Younsi (Shino Corp')
+ **/
+public function deleteCustomer($customerID) {
+    try {
+      // HttpSocket
+      if (!$this->HttpSocket) {
+        $this->HttpSocket = new HttpSocket();
+      }
+      // API endpoint
+      $endPoint = $this->restEndpoint.$this->komojuApiVersion.DS.$this->customerResource.DS.$customerID;
+      // Make a Http request for a new token
+      $this->HttpSocket->configAuth('Basic', $this->secretKey, '');
+      $response = $this->HttpSocket->delete($endPoint);
+      // Parse the results
+      $parsed = $this->parseClassicApiResponse($response);
+      // Handle the response
+      if (isset($parsed['id'])) {
+        return $parsed;
+      }
+      elseif (isset($parsed['error'])) {
+        throw new KomojuException($this->getErrorMessage($parsed));
+      }
+      else {
+        throw new KomojuException(__d('Komoju', 'There was an error.'));
+      }
+    } catch (SocketException $e) {
+      throw new KomojuException(__d('Komoju', 'There was a problem, please try again.'));
+    }
   }
 /**
  * Returns custom error message if there are any set for the error code passed in with the parsed response.
