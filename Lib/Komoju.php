@@ -418,12 +418,23 @@ public function refundPayment($refund) {
     $expiry = sprintf('%d%d' , $month, $year);
     // Currency
     $currency = (isset($payment['currency'])) ? $payment['currency'] : 'JPY';
+    // Currency
+    $capture = (isset($payment['capture'])) ? $payment['capture'] : null;
+    // Tax
+    $tax = (isset($payment['tax'])) ? $payment['tax'] : null;
+    // Currency
+    $description = (isset($payment['description'])) ? $payment['description'] : null;
+    $locale = (isset($payment['locale'])) ? $payment['locale'] : null;
     // Build data
     $data = array(
       'amount' => $payment['amount'],  // The total cost of the transaction
       'currency' => $currency,    // A 3-character currency code
-      'external_order_num' => $this->merchantUUID,
+      'external_order_num' => CakeText::uuid(),
       'metadata[foobar]' => $this->metadata,
+      'capture' => $capture,
+      'tax' => $tax,
+      'description' => $description,
+      'locale' => $locale,
       'payment_details[family_name]' => $payment['last_name'],
       'payment_details[given_name]' => $payment['first_name'],
       'payment_details[month]' => $month,

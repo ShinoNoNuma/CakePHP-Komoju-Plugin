@@ -76,6 +76,10 @@ $payment = array(
    ),
    'cvv' => '123',
    'currency' => 'JPY', // A 3-character currency code
+   'capture' => true, // Optional
+   'description' => 'Sacha\'s pokeball', // Optional
+   'tax' => null, // Optional
+   'locale' => 'ja', // Optional
    'payment_type' => 'credit_card'
 );
             
