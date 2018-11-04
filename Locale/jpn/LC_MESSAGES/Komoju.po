@@ -1,0 +1,250 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"PO-Revision-Date: 2018-11-04 22:30+0900\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"POT-Creation-Date: \n"
+"X-Generator: Poedit 2.2\n"
+"Last-Translator: \n"
+"Language: ja_JP\n"
+
+#: Lib/Komoju.php:136
+msgid ""
+"The server cannot or will not process the request due to something that is "
+"perceived to be a client error."
+msgstr "不正な要求です。サーバーは要求を処理できません"
+
+#: Lib/Komoju.php:137
+msgid "User authorization failed."
+msgstr "ユーザーの認証に失敗しました。"
+
+#: Lib/Komoju.php:138
+msgid ""
+"The requested resource could not be found but may be available again in the "
+"future."
+msgstr "リソースが見つかりませんでした。"
+
+#: Lib/Komoju.php:139
+msgid "We're sorry but something went wrong. Please try your request again."
+msgstr "内部エラーが発生しました。"
+
+#: Lib/Komoju.php:140
+msgid "You are not authorized to perform that action."
+msgstr "リソースへのアクセスは許可されていません。"
+
+#: Lib/Komoju.php:141
+msgid ""
+"The request was well-formed but was unable to be followed due to semantic "
+"errors."
+msgstr "指定されたパラメータに何らかの不整合があるため処理できません。"
+
+#: Lib/Komoju.php:142
+msgid "Processing."
+msgstr "処理中です。"
+
+#: Lib/Komoju.php:143
+msgid ""
+"We are unable to process your request due to an invalid response from the "
+"upstream server."
+msgstr "上位ゲートウェイがエラーを返却しました。"
+
+#: Lib/Komoju.php:144
+msgid ""
+"When attempting to process your payment, we encountered a gateway timeout. "
+"Fear not, we have not processed the payment. Please try your payment again."
+msgstr ""
+"支払いの処理中にゲートウェイタイムアウトが発生しました。請求は行われていませ"
+"ん。支払いを再試行してください。"
+
+#: Lib/Komoju.php:145
+msgid "The server is down for maintenance. Please try again later."
+msgstr "メンテナンス中です。しばらくしてからもう一度実行してください。"
+
+#: Lib/Komoju.php:146
+msgid "The request failed."
+msgstr "リクエストが失敗しました。"
+
+#: Lib/Komoju.php:147
+msgid "Payment method was invalid. %s is not one of %s."
+msgstr "支払い方法が無効です。 %s は  %s の一つではありません。"
+
+#: Lib/Komoju.php:148
+msgid "The token you requested is invalid."
+msgstr "トークンの値が不正です。"
+
+#: Lib/Komoju.php:149
+msgid "The currency you requested is invalid."
+msgstr " \t指定された通貨が不正です。"
+
+#: Lib/Komoju.php:150
+msgid "The payment you requested is not refundable."
+msgstr "返金できない支払いです。"
+
+#: Lib/Komoju.php:151
+msgid "The payment you requested is not capturable."
+msgstr "入金できない決済です。"
+
+#: Lib/Komoju.php:152
+msgid "This payment is noncancellable."
+msgstr "キャンセルできない支払いです。"
+
+#: Lib/Komoju.php:153
+msgid "This payment is fraudulent."
+msgstr "不正行為の疑いのある支払いです。"
+
+#: Lib/Komoju.php:154
+msgid "The value of %s is invalid."
+msgstr "%s の値が不正です。"
+
+#: Lib/Komoju.php:155
+msgid "A required parameter (%s) is missing."
+msgstr "必須パラメータ (%s) が指定されていません。"
+
+#: Lib/Komoju.php:156
+msgid "Insufficient funds."
+msgstr "残高不足です。"
+
+#: Lib/Komoju.php:157
+msgid "Used number."
+msgstr "使用済みの番号です。"
+
+#: Lib/Komoju.php:158
+msgid "Card declined."
+msgstr "カードは拒否されました。"
+
+#: Lib/Komoju.php:159
+msgid "Invalid password."
+msgstr " \tパスワードが不正です。"
+
+#: Lib/Komoju.php:160
+msgid "Bad verification value."
+msgstr "セキュリティーコードが不正です。"
+
+#: Lib/Komoju.php:161
+msgid "Exceeds limit."
+msgstr "決済可能額を超過しました。"
+
+#: Lib/Komoju.php:162
+msgid "Card expired."
+msgstr "カードは期限切れです。"
+
+#: Lib/Komoju.php:163
+msgid "The number you requested is invalid."
+msgstr "指定された番号が不正です。"
+
+#: Lib/Komoju.php:164
+msgid "Invalid account."
+msgstr "アカウントが不正です。"
+
+#: Lib/Komoju.php:195;229;263;311;345;668;702;832
+msgid "There was an error."
+msgstr "エラーが発生しました。"
+
+#: Lib/Komoju.php:198;232;266;314;348;671;705;835
+msgid "There was a problem, please try again."
+msgstr "問題がありました。 もう一度お試しください"
+
+#: Lib/Komoju.php:279
+msgid "Payment ID must be specify"
+msgstr "支払いIDを指定する必要があります"
+
+#: Lib/Komoju.php:284
+msgid "Must specify an \"amount\" to refund"
+msgstr "払い戻しに「金額」を指定する必要があります"
+
+#: Lib/Komoju.php:382
+msgid "There was an error processing the card payment"
+msgstr "カード支払いの処理中にエラーが発生しました"
+
+#: Lib/Komoju.php:385
+msgid "There was a problem processing your card, please try again."
+msgstr "カードの処理中に問題が発生しました。もう一度お試しください。"
+
+#: Lib/Komoju.php:398
+msgid "Not a valid payment type"
+msgstr "有効な支払い方法ではありません"
+
+#: Lib/Komoju.php:413
+msgid "Unknown payment type"
+msgstr "不明な支払いタイプ"
+
+#: Lib/Komoju.php:428
+msgid "Not a valid credit card number"
+msgstr "有効なクレジットカード番号ではありません"
+
+#: Lib/Komoju.php:433
+msgid "You must include the 3 digit security number"
+msgstr "3桁のセキュリティ番号を含める必要があります"
+
+#: Lib/Komoju.php:438;496;538;590;622
+msgid "Must specify an \"amount\" to charge"
+msgstr "請求する金額を指定する必要があります"
+
+#: Lib/Komoju.php:442
+msgid "Must specify an expiry date"
+msgstr "有効期限を指定する必要があります"
+
+#: Lib/Komoju.php:447
+msgid "Must include a M and Y in expiry date"
+msgstr "有効期限内に月と年を含める必要があります"
+
+#: Lib/Komoju.php:492;530
+msgid "Not a valid e-mail address"
+msgstr "有効な電子メールアドレスではありません"
+
+#: Lib/Komoju.php:500
+msgid "Not a valid kombini name"
+msgstr "有効なコンビニ名ではありません"
+
+#: Lib/Komoju.php:534
+msgid "Not a valid phone number"
+msgstr "有効な電話番号ではありません"
+
+#: Lib/Komoju.php:542
+msgid "Last name must be specify"
+msgstr "姓は指定する必要があります"
+
+#: Lib/Komoju.php:546
+msgid "Last name kana must be specify"
+msgstr "姓のカタカナを指定する必要があります"
+
+#: Lib/Komoju.php:550
+msgid "First name must be specify"
+msgstr "ファーストネームを指定する必要があります"
+
+#: Lib/Komoju.php:554
+msgid "first name kana must be specify"
+msgstr "名字カタカナを指定する必要があります"
+
+#: Lib/Komoju.php:585;617
+msgid "Not a valid prepaid number"
+msgstr "有効なプリペイド番号ではありません"
+
+#: Lib/Komoju.php:748
+msgid "An error occurred during the process of creating a customer"
+msgstr "顧客作成プロセス中にエラーが発生しました"
+
+#: Lib/Komoju.php:751
+msgid ""
+"There was a problem processing of process of creating, please try again."
+msgstr "作成プロセスの処理に問題がありました。もう一度お試しください。"
+
+#: Lib/Komoju.php:764
+msgid "customer ID must be specify"
+msgstr "顧客IDを指定する必要があります"
+
+#: Lib/Komoju.php:799
+msgid "An error occurred during the process of updating a customer"
+msgstr "顧客の更新プロセス中にエラーが発生しました"
+
+#: Lib/Komoju.php:802
+msgid ""
+"There was a problem processing of process of updating, please try again."
+msgstr "更新プロセスの処理に問題がありました。もう一度お試しください。"
