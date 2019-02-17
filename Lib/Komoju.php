@@ -30,7 +30,7 @@ class KomojuRedirectException extends CakeException {}
  */
 class Komoju {
 /**
- * Target version for "Classic" Paypal API
+ * Target version for Komoju's API
  */
   protected $komojuApiVersion = 'v1';
 
@@ -133,35 +133,35 @@ protected $tokenResource = 'tokens';
     }
     // Sets errorMessages instance var with localization
     $this->errorMessages = array(
-      'bad_request' => __('The server cannot or will not process the request due to something that is perceived to be a client error.'),
-      'unauthorized' => __('User authorization failed.'),
-      'not_found' => __('The requested resource could not be found but may be available again in the future.'),
-      'internal_server_error' => __('We\'re sorry but something went wrong. Please try your request again.'),
-      'forbidden' => __('You are not authorized to perform that action.'),
-      'unprocessable_entity' => __('The request was well-formed but was unable to be followed due to semantic errors.'),
-      'locked' => __('Processing.'),
-      'bad_gateway' => __('We are unable to process your request due to an invalid response from the upstream server.'),
-      'gateway_timeout' => __('When attempting to process your payment, we encountered a gateway timeout. Fear not, we have not processed the payment. Please try your payment again.'),
-      'service_unavailable' => __('The server is down for maintenance. Please try again later.'),
-      'request_failed' => __('The request failed.'),
-      'invalid_payment_type' => __('Payment method was invalid. %s is not one of %s.'),
-      'invalid_token' => __('The token you requested is invalid.'),
-      'invalid_currency' => __('The currency you requested is invalid.'),
-      'not_refundable' => __('The payment you requested is not refundable.'),
-      'not_capturable' => __('The payment you requested is not capturable.'),
-      'not_cancellable' => __('This payment is noncancellable.'),
-      'fraudulent' => __('This payment is fraudulent.'),
-      'invalid_parameter' => __('The value of %s is invalid.'),
-      'missing_parameter' => __('A required parameter (%s) is missing.'),
-      'insufficient_funds' => __('Insufficient funds.'),
-      'used_number' => __('Used number.'),
-      'card_declined' => __('Card declined.'),
-      'invalid_password' => __('Invalid password.'),
-      'bad_verification_value' => __('Bad verification value.'),
-      'exceeds_limit' => __('Exceeds limit.'),
-      'card_expired' => __('Card expired.'),
-      'invalid_number' => __('The number you requested is invalid.'),
-      'invalid_account' => __('Invalid account.')
+      'bad_request' => __d('Komoju','The server cannot or will not process the request due to something that is perceived to be a client error.'),
+      'unauthorized' => __d('Komoju','User authorization failed.'),
+      'not_found' => __d('Komoju','The requested resource could not be found but may be available again in the future.'),
+      'internal_server_error' => __d('Komoju','We\'re sorry but something went wrong. Please try your request again.'),
+      'forbidden' => __d('Komoju','You are not authorized to perform that action.'),
+      'unprocessable_entity' => __d('Komoju','The request was well-formed but was unable to be followed due to semantic errors.'),
+      'locked' => __d('Komoju','Processing.'),
+      'bad_gateway' => __d('Komoju','We are unable to process your request due to an invalid response from the upstream server.'),
+      'gateway_timeout' => __d('Komoju','When attempting to process your payment, we encountered a gateway timeout. Fear not, we have not processed the payment. Please try your payment again.'),
+      'service_unavailable' => __d('Komoju','The server is down for maintenance. Please try again later.'),
+      'request_failed' => __d('Komoju','The request failed.'),
+      'invalid_payment_type' => __d('Komoju','Payment method was invalid. %s is not one of %s.'),
+      'invalid_token' => __d('Komoju','The token you requested is invalid.'),
+      'invalid_currency' => __d('Komoju','The currency you requested is invalid.'),
+      'not_refundable' => __d('Komoju','The payment you requested is not refundable.'),
+      'not_capturable' => __d('Komoju','The payment you requested is not capturable.'),
+      'not_cancellable' => __d('Komoju','This payment is noncancellable.'),
+      'fraudulent' => __d('Komoju','This payment is fraudulent.'),
+      'invalid_parameter' => __d('Komoju','The value of %s is invalid.'),
+      'missing_parameter' => __d('Komoju','A required parameter (%s) is missing.'),
+      'insufficient_funds' => __d('Komoju','Insufficient funds.'),
+      'used_number' => __d('Komoju','Used number.'),
+      'card_declined' => __d('Komoju','Card declined.'),
+      'invalid_password' => __d('Komoju','Invalid password.'),
+      'bad_verification_value' => __d('Komoju','Bad verification value.'),
+      'exceeds_limit' => __d('Komoju','Exceeds limit.'),
+      'card_expired' => __d('Komoju','Card expired.'),
+      'invalid_number' => __d('Komoju','The number you requested is invalid.'),
+      'invalid_account' => __d('Komoju','Invalid account.')
     );
   }
 
@@ -253,7 +253,7 @@ public function cancelPayment($paymentID) {
       // Parse the results.
       $parsed = $this->parseClassicApiResponse($response);
       // Handle the response
-      if (isset($parsed['id']))  {
+      if(isset($parsed['id'])){
         return $parsed;
       }
       elseif (isset($parsed['error']))  {
